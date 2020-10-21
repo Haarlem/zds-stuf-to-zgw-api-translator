@@ -71,7 +71,7 @@ public class ModelMapperTests {
 
         //assign
     	System.setProperty("user.timezone", "CET");
-    	ModelMapperConfig.singleton.timeoffset = 120;
+    	ModelMapperConfig.singleton.timeoffset = 0;
         ZdsHeeft zdsHeeft = new ZdsHeeft().setDatumStatusGezet("20200904103404929");
         // String expectedDatum = "2020-09-04T10:34:04+02:00";
         // TODO: use gooed expectd values
@@ -90,7 +90,7 @@ public class ModelMapperTests {
 
         //assign
     	System.setProperty("user.timezone", "CET");
-    	ModelMapperConfig.singleton.timeoffset = 60;
+    	ModelMapperConfig.singleton.timeoffset = 0;
         ZdsHeeft zdsHeeft = new ZdsHeeft().setDatumStatusGezet("20200101103404929");
         //String expectedDatum = "2020-01-01T10:34:04+01:00";
         // TODO: use gooed expectd values
