@@ -52,7 +52,7 @@ public class ModelMapperConfig {
 	private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Value("${nl.haarlem.translations.zdstozgw.timeoffset.minutes}")
-	public int timeoffset;
+	public String timeoffset;
 	public static ModelMapperConfig singleton;
 	
 	@Bean
@@ -266,12 +266,10 @@ public class ModelMapperConfig {
 					}
 					var date = zdsDateFormatter.parse(stufDate);
 					// log.debug("date:" + date);
-					if (ModelMapperConfig.singleton.timeoffset != 0) {
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(date);
-						cal.add(Calendar.MINUTE, ModelMapperConfig.singleton.timeoffset);
-						date = cal.getTime();
-					}
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					cal.add(Calendar.MINUTE, Integer.parseInt(ModelMapperConfig.singleton.timeoffset));
+					date = cal.getTime();
 					var zgwDate = zgwDateFormatter.format(date);
 					log.debug("convertStufDateToZgwDate: " + stufDate + " (amsterdam) --> " + zgwDate
 							+ "(gmt) with offset minutes:" + ModelMapperConfig.singleton.timeoffset  + "(date:" + date + ")");
@@ -325,7 +323,7 @@ public class ModelMapperConfig {
 						// OffsetDateTime gmtDate = cetDate.toOffsetDateTime();
 						var gmtDate = cetDate.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
 						log.debug("convertStufDateTimeToZgwDateTime to GMT tomezone:\t\t" + gmtDate.toString());
-						gmtDate = gmtDate.plusMinutes(ModelMapperConfig.singleton.timeoffset );
+						gmtDate = gmtDate.plusMinutes(Integer.parseInt(ModelMapperConfig.singleton.timeoffset));
 						log.debug("convertStufDateTimeToZgwDateTime aded offset:\t\t" + gmtDate.toString() + " (offset in minutes:" + ModelMapperConfig.singleton.timeoffset  + ")");
 						DateTimeFormatter zdsFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
 						var result = gmtDate.format(zdsFormatter);
@@ -392,7 +390,7 @@ public class ModelMapperConfig {
 					DateTimeFormatter zdsFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
 					ZonedDateTime gmtDate = LocalDateTime.parse(stufDateTime, zdsFormatter).atZone(ZoneId.of("GMT"));
 					log.debug("convertZgwDateTimeToStufDateTime parsed:\t" + gmtDate.toString());
-					gmtDate = gmtDate.plusMinutes(-ModelMapperConfig.singleton.timeoffset);
+					gmtDate = gmtDate.plusMinutes(-Integer.parseInt(ModelMapperConfig.singleton.timeoffset));
 					log.debug("convertZgwDateTimeToStufDateTime substractedoffset:\t" + gmtDate.toString());
 					OffsetDateTime cetDate = gmtDate.toOffsetDateTime();
 					log.debug("convertZgwDateTimeToStufDateTime to cet timezone:\t" + cetDate.toString());

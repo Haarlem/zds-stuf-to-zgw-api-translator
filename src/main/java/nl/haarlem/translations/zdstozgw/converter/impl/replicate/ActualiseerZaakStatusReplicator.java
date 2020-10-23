@@ -23,15 +23,19 @@ public class ActualiseerZaakStatusReplicator extends ActualiseerZaakStatusTransl
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Replicates zaak before updating zaakstatus
+     *
+     * @return
+     * @throws ResponseStatusException
+     */
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsZakLk01ActualiseerZaakstatus = (ZdsZakLk01ActualiseerZaakstatus) this.getZdsDocument();
 
-		// replicate the zaak
 		var replicator = new Replicator(this);
 		replicator.replicateZaak(zdsZakLk01ActualiseerZaakstatus.objects.get(0).identificatie);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -39,7 +43,6 @@ public class ActualiseerZaakStatusReplicator extends ActualiseerZaakStatusTransl
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

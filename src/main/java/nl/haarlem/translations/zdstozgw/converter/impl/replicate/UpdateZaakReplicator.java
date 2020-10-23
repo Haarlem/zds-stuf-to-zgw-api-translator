@@ -22,15 +22,19 @@ public class UpdateZaakReplicator extends UpdateZaakTranslator {
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Replicates the zaak before updating it
+     *
+     * @return
+     * @throws ResponseStatusException
+     */
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsZakLk01 = (ZdsZakLk01) this.getZdsDocument();
 
-		// replicate the zaak
 		var replicator = new Replicator(this);
 		replicator.replicateZaak(zdsZakLk01.objects.get(0).identificatie);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -38,7 +42,6 @@ public class UpdateZaakReplicator extends UpdateZaakTranslator {
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

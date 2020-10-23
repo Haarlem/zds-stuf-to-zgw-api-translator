@@ -22,14 +22,18 @@ public class CreeerZaakReplicator extends CreeerZaakTranslator {
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Creates the zaak, no replication is necessary because it's a new zaak
+     *
+     * @return ZDS response
+     * @throws ResponseStatusException
+     */
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsZakLk01 = (ZdsZakLk01) this.getZdsDocument();
 
-		// new, no need to replicate the zaak
 		var replicator = new Replicator(this);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -37,7 +41,6 @@ public class CreeerZaakReplicator extends CreeerZaakTranslator {
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

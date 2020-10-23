@@ -1,6 +1,9 @@
 package nl.haarlem.translations.zdstozgw.converter;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SuppressWarnings("serial")
+@Slf4j
 public class ConverterException extends RuntimeException {
 
 	public String details;
@@ -11,8 +14,7 @@ public class ConverterException extends RuntimeException {
 
 	public ConverterException(String omschrijving, Throwable cause) {
 		super(omschrijving);
-		// TODO: voor nu wel handig, later maar weg?
-		cause.printStackTrace();
+		log.error(cause.getStackTrace().toString());
 	}
 
 	public ConverterException(String omschrijving, String details, Throwable cause) {

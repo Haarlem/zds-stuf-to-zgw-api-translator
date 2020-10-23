@@ -1,12 +1,10 @@
 package nl.haarlem.translations.zdstozgw;
 
 import nl.haarlem.translations.zdstozgw.config.ConfigService;
-import nl.haarlem.translations.zdstozgw.config.model.Configuratie;
 //import nl.haarlem.translations.zdstozgw.config.model.Replication;
 //import nl.haarlem.translations.zdstozgw.config.model.ResponseType;
 import nl.haarlem.translations.zdstozgw.requesthandler.impl.LoggingRequestHandler;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;

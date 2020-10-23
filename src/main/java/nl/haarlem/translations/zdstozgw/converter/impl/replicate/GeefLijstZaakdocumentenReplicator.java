@@ -23,15 +23,19 @@ public class GeefLijstZaakdocumentenReplicator extends GeefLijstZaakdocumentenTr
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Replicates the zaak before returning list of documents
+     *
+     * @return ZDS Lijst Zaakdocumenten
+     * @throws ResponseStatusException
+     */
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsZakLv01 = (ZdsZakLv01) this.getZdsDocument();
 
-		// replicate the zaak
 		var replicator = new Replicator(this);
 		replicator.replicateZaak(zdsZakLv01.gelijk.identificatie);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -39,7 +43,6 @@ public class GeefLijstZaakdocumentenReplicator extends GeefLijstZaakdocumentenTr
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

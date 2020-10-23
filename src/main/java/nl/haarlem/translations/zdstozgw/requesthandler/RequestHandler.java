@@ -27,7 +27,6 @@ public abstract class RequestHandler {
 	}
 
 	protected String getStacktrace(Exception ex) {
-		// get the stacktrace
 		var swriter = new java.io.StringWriter();
 		var pwriter = new java.io.PrintWriter(swriter);
 		ex.printStackTrace(pwriter);
@@ -44,7 +43,6 @@ public abstract class RequestHandler {
 				? new ZdsFo03(this.converter.getZdsDocument().stuurgegevens, convertor.getContext().referentienummer)
 				: new ZdsFo03();
 		fo03.body = new ZdsFo03.Body();
-		https: // www.gemmaonline.nl/images/gemmaonline/4/4f/Stuf0301_-_ONV0347_%28zonder_renvooi%29.pdf
 		fo03.body.code = "StUF058";
 		fo03.body.plek = "server";
 		var omschrijving = ex.toString();

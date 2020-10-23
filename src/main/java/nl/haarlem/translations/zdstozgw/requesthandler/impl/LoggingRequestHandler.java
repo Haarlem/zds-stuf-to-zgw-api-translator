@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import nl.haarlem.translations.zdstozgw.config.ConfigService;
 import nl.haarlem.translations.zdstozgw.config.SpringContext;
-import nl.haarlem.translations.zdstozgw.config.model.Configuratie;
+import nl.haarlem.translations.zdstozgw.config.model.Configuration;
 import nl.haarlem.translations.zdstozgw.converter.Converter;
 import nl.haarlem.translations.zdstozgw.requesthandler.RequestHandler;
 import nl.haarlem.translations.zdstozgw.requesthandler.impl.logging.RequestResponseCycle;
@@ -35,7 +35,7 @@ public class LoggingRequestHandler extends RequestHandler {
 	public ResponseEntity<?> execute() {
 		log.debug("Executing request with handler: " + this.getClass().getCanonicalName() + " and converter: "
 				+ this.converter.getClass().getCanonicalName());
-		Configuratie configuratie = this.configService.getConfiguratie();
+		Configuration configuration = this.configService.getConfiguration();
 
 		LocalDateTime start = LocalDateTime.now();
 		RequestResponseCycle session = new RequestResponseCycle().setTimestamp(start)

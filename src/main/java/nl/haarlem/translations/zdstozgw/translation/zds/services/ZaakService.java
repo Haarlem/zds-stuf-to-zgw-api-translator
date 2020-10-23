@@ -62,7 +62,7 @@ public class ZaakService {
 	}
 
 	public String getRSIN(String gemeenteCode) {
-		List<Organisatie> organisaties = this.configService.getConfiguratie().getOrganisaties();
+		List<Organisatie> organisaties = this.configService.getConfiguration().getOrganisaties();
 		for (Organisatie organisatie : organisaties) {
 			if (organisatie.getGemeenteCode().equals(gemeenteCode)) {
 				return organisatie.getRSIN();
@@ -95,7 +95,7 @@ public class ZaakService {
 		log.debug("Created a ZGW Zaak with UUID: " + zgwZaak.getUuid());
 
 		// rollen
-		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguratie().getZgwRolOmschrijving();
+		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguration().getZgwRolOmschrijving();
 		addRolToZgw(zdsZaak.heeftBetrekkingOp, zgwRolOmschrijving.getHeeftBetrekkingOp(), zgwZaak);
 		addRolToZgw(zdsZaak.heeftAlsBelanghebbende, zgwRolOmschrijving.getHeeftAlsBelanghebbende(), zgwZaak);
 		addRolToZgw(zdsZaak.heeftAlsInitiator, zgwRolOmschrijving.getHeeftAlsInitiator(), zgwZaak);
@@ -355,7 +355,7 @@ public class ZaakService {
 		var result = new ArrayList<ZdsZaak>();
 		for (ZgwRol rol : zgwRollen) {
 			var zgwRolType = this.zgwClient.getRolTypeByUrl(rol.roltype);
-			ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguratie().getZgwRolOmschrijving();
+			ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguration().getZgwRolOmschrijving();
 			if (zgwRolType.omschrijving.equals(zgwRolOmschrijving.getHeeftAlsInitiator())) {
 
 				// TODO: hier minder overhead!
@@ -376,12 +376,12 @@ public class ZaakService {
 		ZdsZaak zaak = new ZdsZaak();
 		zaak = this.modelMapper.map(zgwZaak, ZdsZaak.class);
 
-		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguratie().getZgwRolOmschrijving();
+		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguration().getZgwRolOmschrijving();
 
 		for (ZgwRol zgwRol : this.zgwClient.getRollenByZaakUrl(zgwZaak.url)) {
 			var rolGeconverteerd = false;
-			
-			if (zgwRolOmschrijving.getHeeftAlsBelanghebbende() != null 
+
+			if (zgwRolOmschrijving.getHeeftAlsBelanghebbende() != null
 					&& zgwRolOmschrijving.getHeeftAlsBelanghebbende().equalsIgnoreCase(zgwRol.getOmschrijvingGeneriek())) {
 				zaak.heeftAlsBelanghebbende = getZdsRol(zgwZaak, zgwRolOmschrijving.getHeeftAlsBelanghebbende(), "ZAKBTRBLH");
 				rolGeconverteerd = true;
@@ -558,17 +558,17 @@ public class ZaakService {
 
 	private void updateRolInZgw(String typeRolOmschrijving, ZgwZaak zgwZaak, ZdsRol newValue) {
 		log.debug("updateRolInZgw Rol:" + typeRolOmschrijving);
-		
+
 		// no put action for rollen, so first delete then add
 		log.debug("Attempting to update rol by deleting and adding as new");
 		deleteRolFromZgw(typeRolOmschrijving, zgwZaak);
-		
-		
+
+
 		if(newValue.gerelateerde == null) {
 			log.debug("Not adding the rol:"  + typeRolOmschrijving + ", gerelateerde == null ");
 			return;
 		}
-		addRolToZgw(newValue, typeRolOmschrijving, zgwZaak);			
+		addRolToZgw(newValue, typeRolOmschrijving, zgwZaak);
 	}
 
 	private void deleteRolFromZgw(String typeRolOmschrijving, ZgwZaak zgwZaak) {
@@ -586,7 +586,7 @@ public class ZaakService {
 	}
 
 	public String getRolOmschrijvingGeneriekByRolName(String rolName) {
-		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguratie().getZgwRolOmschrijving();
+		ZgwRolOmschrijving zgwRolOmschrijving = this.configService.getConfiguration().getZgwRolOmschrijving();
 
 		switch (rolName.toLowerCase()) {
 		case "heeftalsbelanghebbende":

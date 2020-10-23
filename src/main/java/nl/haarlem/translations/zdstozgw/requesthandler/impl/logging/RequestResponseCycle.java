@@ -30,7 +30,6 @@ public class RequestResponseCycle {
 	private String clientResponseBody;
 	private int clientResponseCode;
 
-	// Wanneer we ergens in het proces een fout hebben, dan willen we die bewaren
 	@Lob
 	private String stackTrace;
 }

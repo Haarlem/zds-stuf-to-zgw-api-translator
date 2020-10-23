@@ -1,7 +1,8 @@
 # OpenZaakBrug #
 
-[![Build Status](https://travis-ci.com/Sudwest-Fryslan/OpenZaakBrug.svg?branch=master)](https://travis-ci.com/Sudwest-Fryslan/OpenZaakBrug)
-[![codecov](https://codecov.io/gh/Sudwest-Fryslan/OpenZaakBrug/branch/master/graph/badge.svg)](https://codecov.io/gh/Sudwest-Fryslan/OpenZaakBrug)
+[![Build Status](https://travis-ci.com/Sudwest-Fryslan/OpenZaakBrug.svg?branch=master)](https://travis-ci.com/Sudwest-Fryslan/OpenZaakBrug) travis-ci
+
+[![codecov](https://codecov.io/gh/Sudwest-Fryslan/OpenZaakBrug/branch/master/graph/badge.svg)](https://codecov.io/gh/Sudwest-Fryslan/OpenZaakBrug) codecov.io
 
 Deze applicatie is een proof-of-concept van een service die een vertaling kan doen van StUF-ZDS Soap-berichten naar de corresponderende ZGW API-calls. 
 Met deze proof-of-concept kan aantoond worden welke functionaliteiten er nodig zijn door gemeente, maar ook aan te tonen dat het ook daadwerkelijk mogelijk is.

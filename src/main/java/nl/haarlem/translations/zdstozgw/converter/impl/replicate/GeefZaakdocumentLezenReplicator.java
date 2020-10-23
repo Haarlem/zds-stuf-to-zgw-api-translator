@@ -24,16 +24,19 @@ public class GeefZaakdocumentLezenReplicator extends GeefZaakdocumentLezenTransl
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Replicates the zaak before returning zaakdocument
+     *
+     * @return
+     * @throws ResponseStatusException
+     */
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsZakLv01 = (ZdsZakLv01) this.getZdsDocument();
 
-		// replicate the zaak
 		var replicator = new Replicator(this);
-		// replicator.replicateZaak(zdsEdcLv01.zdsScope.object.isRelevantVoor.gerelateerde.identificatie);
 		replicator.replicateZaak(zdsZakLv01.scope.object.identificatie);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -41,7 +44,6 @@ public class GeefZaakdocumentLezenReplicator extends GeefZaakdocumentLezenTransl
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

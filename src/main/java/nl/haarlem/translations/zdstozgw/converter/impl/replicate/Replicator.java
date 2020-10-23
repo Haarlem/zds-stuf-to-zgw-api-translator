@@ -55,8 +55,8 @@ public class Replicator {
 			log.info("REPLICATION [replicate] zaakidentificatie #" + zaakidentificatie);
 			
 			// bestond nog niet, aanmaken
-			var zdsUrl = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefZaakdetails().getUrl();
-			var zdsSoapAction = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefZaakdetails().getSoapaction();
+			var zdsUrl = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefZaakdetails().getUrl();
+			var zdsSoapAction = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefZaakdetails().getSoapaction();
 			var zdsRequest = new ZdsReplicateGeefZaakdetailsLv01();
 			zdsRequest.stuurgegevens = this.converter.getZdsDocument().stuurgegevens;
 			zdsRequest.parameters = new ZdsParameters();
@@ -83,8 +83,8 @@ public class Replicator {
 		// altijd de controle of de documenten al bestaan
 		List<ZdsHeeftRelevant> relevanteDocumenten = null;
 		{
-			var zdsUrl = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefLijstZaakdocumenten().getUrl();
-			var zdsSoapAction = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefLijstZaakdocumenten().getSoapaction();
+			var zdsUrl = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefLijstZaakdocumenten().getUrl();
+			var zdsSoapAction = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefLijstZaakdocumenten().getSoapaction();
 			var zdsRequest = new ZdsReplicateGeefLijstZaakdocumentenLv01();
 			zdsRequest.stuurgegevens = this.converter.getZdsDocument().stuurgegevens;
 			zdsRequest.parameters = new ZdsParameters();
@@ -113,8 +113,8 @@ public class Replicator {
 				if (zgwEnkelvoudigInformatieObject == null) {
 					log.info("REPLICATION [replicate] documentidentificatie #" + zaakdocumentidentificatie);
 
-					var zdsUrl = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefZaakdocumentLezen().getUrl(); 
-					var zdsSoapAction = this.converter.getZaakService().configService.getConfiguratie().getReplication().getGeefZaakdocumentLezen().getSoapaction(); 
+					var zdsUrl = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefZaakdocumentLezen().getUrl(); 
+					var zdsSoapAction = this.converter.getZaakService().configService.getConfiguration().getReplication().getGeefZaakdocumentLezen().getSoapaction(); 
 					var zdsRequest = new ZdsReplicateGeefZaakdocumentLezenLv01(); 
 					 zdsRequest.stuurgegevens = this.converter.getZdsDocument().stuurgegevens; 
 					 zdsRequest.parameters = new ZdsParameters(); //zdsRequest.parameters.setSortering("0");

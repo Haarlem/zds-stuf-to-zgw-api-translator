@@ -24,7 +24,7 @@ public class RequestHandlerFactory {
 	}
 
 	public RequestHandler getRequestHandler(Converter converter) throws ResponseStatusException {
-		var classname = this.configService.getConfiguratie().getRequestHandlerImplementation();
+		var classname = this.configService.getConfiguration().getRequestHandlerImplementation();
 		try {
 			Class<?> c = Class.forName(classname);
 			java.lang.reflect.Constructor<?> ctor = c.getConstructor(Converter.class, ConfigService.class);

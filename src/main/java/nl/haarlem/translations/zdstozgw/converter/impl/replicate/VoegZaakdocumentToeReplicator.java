@@ -23,15 +23,20 @@ public class VoegZaakdocumentToeReplicator extends VoegZaakdocumentToeTranslator
 		super(context, translation, zaakService);
 	}
 
+    /**
+     * Replicates the zaak before adding document
+     *
+     * @return
+     * @throws ResponseStatusException
+     */
+
 	@Override
 	public ResponseEntity<?> execute() throws ResponseStatusException {
 		var zdsEdcLk01 = (ZdsEdcLk01) this.getZdsDocument();
 
-		// replicate the zaak
 		var replicator = new Replicator(this);
 		replicator.replicateZaak(zdsEdcLk01.objects.get(0).identificatie);
 
-		// send to legacy system
 		var legacyresponse = replicator.proxy();
 		if (legacyresponse.getStatusCode() != HttpStatus.OK) {
 			log.warn("Service:" + this.getTranslation().getLegacyservice() + " SoapAction: "
@@ -39,7 +44,6 @@ public class VoegZaakdocumentToeReplicator extends VoegZaakdocumentToeTranslator
 			return legacyresponse;
 		}
 
-		// do the translation
 		return super.execute();
 	}
 }

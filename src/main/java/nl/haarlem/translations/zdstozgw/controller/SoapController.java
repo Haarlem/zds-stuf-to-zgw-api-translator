@@ -38,18 +38,33 @@ public class SoapController {
 		this.requestHandlerFactory = requestHandlerFactory;
 	}
 
+
+    /**
+     * Does not handle any reqyests, returns a list of avaialble endpoints
+     *
+     * @return List of available endpoints
+     */
 	@GetMapping(path = { "/" }, produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity<?> HandleRequest() {
-		// will always throw an exception, the exception contains valid endpoints
 		var context = new RequestHandlerContext("/", "", "");
 		this.requestHandlerFactory.getRequestHandler(this.converterFactory.getConverter(context));
 		return null;
 	}
 
-	@PostMapping(path = {
-			"/{modus}/{version}/{protocol}/{endpoint}" }, consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+    /**
+     * Receives the SOAP requests. Based on the configuration and path variables, the correct translation implementation is used.
+     *
+     * @param modus
+     * @param version
+     * @param protocol
+     * @param endpoint
+     * @param soapAction
+     * @param body
+     * @return ZDS response
+     */
+	@PostMapping(path = { "/{modus}/{version}/{protocol}/{endpoint}" },
+                    consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<?> HandleRequest(
-			// we dont use path2, only used so it can be used as wildcard
 			@PathVariable String modus, @PathVariable String version, @PathVariable String protocol,
 			@PathVariable String endpoint, @RequestHeader(name = "SOAPAction", required = true) String soapAction,
 			@RequestBody String body) {
@@ -59,8 +74,6 @@ public class SoapController {
 		log.info("Processing request for path: /" + path + "/ with soapaction: " + soapAction
 				+ " with referentienummer:" + context.getReferentienummer());
 
-		// TODO: lelijk en het is geen php, moet anders naar
-		// nl.haarlem.translations.zdstozgw.config.SpringContext.LoggingRequestInterceptor
 		RequestContextHolder.getRequestAttributes().setAttribute("referentienummer", context.getReferentienummer(),
 				RequestAttributes.SCOPE_REQUEST);
 

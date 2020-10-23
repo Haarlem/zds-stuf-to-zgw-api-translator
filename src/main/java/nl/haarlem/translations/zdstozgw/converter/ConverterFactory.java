@@ -36,7 +36,7 @@ public class ConverterFactory {
 
 		if (translation == null) {
 			String combinations = "";
-			for (Translation t : this.configService.getConfiguratie().getTranslations()) {
+			for (Translation t : this.configService.getConfiguration().getTranslations()) {
 				combinations += "\n\tpath: '" + t.getPath() + "' soapaction: '" + t.getSoapAction() + "'";
 			}
 			log.error("Could not load a convertor for path: '" + context.getUrl() + "' with soapaction: '"

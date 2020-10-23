@@ -49,24 +49,18 @@ public class ZDSClient {
 			method.setRequestEntity(requestEntity);
 			var httpclient = new org.apache.commons.httpclient.HttpClient();
 
-			// TODO: netter, het geen php :-)
 			String referentienummer = (String) RequestContextHolder.getRequestAttributes()
 					.getAttribute("referentienummer", RequestAttributes.SCOPE_REQUEST);
-			ZdsRequestResponseCycle session = new ZdsRequestResponseCycle();
-			session.setReferentienummer(referentienummer);
-			session.setZdsUrl(zdsUrl);
-			session.setZdsMethod(method.getName());
-			session.setZdsSoapAction(zdsSoapAction);
-			session.setZdsRequestBody(zdsRequest);
-			this.repository.save(session);
+            ZdsRequestResponseCycle zdsRequestResponseCycle = getZdsRequestResponseCycle(zdsUrl, zdsSoapAction, zdsRequest, method, referentienummer);
+            this.repository.save(zdsRequestResponseCycle);
 
 			int responsecode = httpclient.executeMethod(method);
 			String zdsResponseBody = method.getResponseBodyAsString();
-			session.setZdsResponseCode(responsecode);
-			session.setZdsResponseBody(zdsResponseBody);
-			this.repository.save(session);
+			zdsRequestResponseCycle.setZdsResponseCode(responsecode);
+			zdsRequestResponseCycle.setZdsResponseBody(zdsResponseBody);
+			this.repository.save(zdsRequestResponseCycle);
 
-			this.repository.save(session);
+			this.repository.save(zdsRequestResponseCycle);
 			return new ResponseEntity<>(zdsResponseBody, HttpStatus.valueOf(responsecode));
 		} catch (IOException ce) {
 			throw new ConverterException(
@@ -80,4 +74,14 @@ public class ZDSClient {
 			method.releaseConnection();
 		}
 	}
+
+    private ZdsRequestResponseCycle getZdsRequestResponseCycle(String zdsUrl, String zdsSoapAction, String zdsRequest, PostMethod method, String referentienummer) {
+        ZdsRequestResponseCycle session = new ZdsRequestResponseCycle();
+        session.setReferentienummer(referentienummer);
+        session.setZdsUrl(zdsUrl);
+        session.setZdsMethod(method.getName());
+        session.setZdsSoapAction(zdsSoapAction);
+        session.setZdsRequestBody(zdsRequest);
+        return session;
+    }
 }

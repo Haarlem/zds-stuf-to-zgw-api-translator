@@ -31,7 +31,6 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 	}
 
 	private void addRequestToDatabase(HttpRequest request, byte[] body) throws UnsupportedEncodingException {
-		// TODO: netter, het geen php :-)
 		String referentienummer = (String) RequestContextHolder.getRequestAttributes().getAttribute("referentienummer",
 				RequestAttributes.SCOPE_REQUEST);
 		this.currentInterimRequestResponseCycle = new ZgwRequestResponseCycle().setReferentienummer(referentienummer)
