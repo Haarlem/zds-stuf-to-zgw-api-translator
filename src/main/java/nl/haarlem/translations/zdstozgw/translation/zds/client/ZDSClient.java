@@ -7,6 +7,8 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,10 +27,11 @@ public class ZDSClient {
 
 	private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+	@Autowired
 	private ZdsRequestResponseCycleRepository repository;
 
-	public ZDSClient() {
-		this.repository = SpringContext.getBean(ZdsRequestResponseCycleRepository.class);
+	public ZDSClient(ZdsRequestResponseCycleRepository requestResponseCycleRepository) {
+	    this.repository = requestResponseCycleRepository;
 
 	}
 
