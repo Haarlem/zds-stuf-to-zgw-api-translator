@@ -1,7 +1,6 @@
 package nl.haarlem.translations.zdstozgw.config;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.invoke.MethodHandles;
 
 import nl.haarlem.translations.zdstozgw.config.model.*;
@@ -25,10 +24,20 @@ public class ConfigService {
 	private Configuration configuration;
 
 	public ConfigService() throws Exception {
-		var cpr = new ClassPathResource("config.json");
-		var filename = cpr.getFile().getAbsoluteFile();
-		log.info("Loading config from:" + filename);
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+        ClassPathResource cpr = null;
+        BufferedReader bufferedReader = null;
+
+        try{
+            cpr = new ClassPathResource("config.json");
+            var filename = cpr.getFile().getAbsoluteFile();
+            bufferedReader = new BufferedReader(new FileReader(filename));
+            log.info("Loading configuration from classpathe: "+filename.getName());
+        } catch(FileNotFoundException ex){
+            log.error("Config not found on classpath..."+ex.getClass().getCanonicalName());
+            File file = new File("/config/config.json");
+            bufferedReader = new BufferedReader(new FileReader(file));
+            log.info("Loading configuration from file: "+file.getAbsolutePath());
+        }
 
 		Gson gson = new Gson();
 		this.configuration = gson.fromJson(bufferedReader, Configuration.class);
