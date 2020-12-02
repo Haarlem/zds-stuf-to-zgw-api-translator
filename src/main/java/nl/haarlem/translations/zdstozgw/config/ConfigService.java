@@ -34,7 +34,7 @@ public class ConfigService {
             log.info("Loading configuration from classpathe: "+filename.getName());
         } catch(FileNotFoundException ex){
             log.error("Config not found on classpath..."+ex.getClass().getCanonicalName());
-            File file = new File("/config/config.json");
+            File file = new File("config/config.json");
             bufferedReader = new BufferedReader(new FileReader(file));
             log.info("Loading configuration from file: "+file.getAbsolutePath());
         }
