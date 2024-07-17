@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk
+FROM docker.haarlem.nl/maven_jdk_java11:latest
 ENV TZ=Europe/Amsterdam
 WORKDIR /home
 RUN mkdir lib && mkdir data
