@@ -1,9 +1,9 @@
 /*
  * Copyright 2020-2021 The Open Zaakbrug Contributors
  *
- * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the 
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
  * European Commission - subsequent versions of the EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  *
@@ -16,13 +16,16 @@
 package nl.haarlem.translations.zdstozgw.translation.zgw.client;
 
 import java.lang.invoke.MethodHandles;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
+
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.http.conn.ssl.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
@@ -64,31 +67,33 @@ public class RestTemplateService {
             HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         }
 		this.restTemplate = restTemplateBuilder.build();
-		this.restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(getAllCertsTrustingRequestFactory(
-				connectionRequestTimeout, connectTimeout, readTimeout, maxConnPerRoute, maxConnTotal)));
+		//this.restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(getAllCertsTrustingRequestFactory(
+		//		connectionRequestTimeout, connectTimeout, readTimeout, maxConnPerRoute, maxConnTotal)));
 	}
 
-	private HttpComponentsClientHttpRequestFactory getAllCertsTrustingRequestFactory(int connectionRequestTimeout,
+    private HttpComponentsClientHttpRequestFactory getAllCertsTrustingRequestFactory(int connectionRequestTimeout,
 			int connectTimeout, int readTimeout, int maxConnPerRoute, int maxConnTotal) {
-		TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-
-		SSLContext sslContext = null;
-		try {
-			sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
-					.build();
-		} catch (Exception ex) {
-		}
-
-		SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
-		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf)
-				.setMaxConnPerRoute(maxConnPerRoute).setMaxConnTotal(maxConnTotal).build();
-
+        CloseableHttpClient httpClient = null;
+        try {
+            httpClient = HttpClients.custom().
+                setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).
+                setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy()
+                {
+                    public boolean isTrusted(X509Certificate[] arg0, String arg1) throws CertificateException
+                    {
+                        return true;
+                    }
+                }).build()).build();
+        } catch (KeyManagementException e) {
+        } catch (NoSuchAlgorithmException e) {
+        } catch (KeyStoreException e) {
+        }
 		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 		requestFactory.setConnectionRequestTimeout(connectionRequestTimeout);
 		requestFactory.setConnectTimeout(connectTimeout);
-		requestFactory.setReadTimeout(readTimeout);
+		//requestFactory.setReadTimeout(readTimeout);
 
-		requestFactory.setHttpClient(httpClient);
+		requestFactory.setHttpClient((HttpClient) httpClient);
 		return requestFactory;
 	}
 

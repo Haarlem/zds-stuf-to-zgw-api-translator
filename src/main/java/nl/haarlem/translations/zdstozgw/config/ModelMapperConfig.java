@@ -78,7 +78,7 @@ public class ModelMapperConfig {
         modelMapper.typeMap(ZgwStatus.class, ZdsHeeft.class)
             .addMappings(mapper -> mapper.map(ZgwStatus::getStatustoelichting, ZdsHeeft::setToelichting))
             .addMappings(mapper -> mapper.using(convertZgwDateTimeToStufDateTime())
-                .map(ZgwStatus::getDatumStatusGezet, ZdsHeeft::setDatumStatusGezet));
+            .map(ZgwStatus::getDatumStatusGezet, ZdsHeeft::setDatumStatusGezet));
 
         modelMapper.typeMap(ZgwStatus.class, ZdsGerelateerde.class);
 
