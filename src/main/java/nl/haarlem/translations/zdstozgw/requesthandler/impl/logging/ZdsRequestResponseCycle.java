@@ -37,8 +37,9 @@ import nl.haarlem.translations.zdstozgw.utils.StringUtils;
 @Table(indexes = @Index(columnList = "referentienummer"))
 public class ZdsRequestResponseCycle {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "zds_request_response_cycle_seq")
+    @SequenceGenerator(name = "zds_request_response_cycle_seq", sequenceName = "zds_request_response_cycle_seq", allocationSize = 1)
+    private long id;
 	private String referentienummer;
 
 	private LocalDateTime startdatetime;

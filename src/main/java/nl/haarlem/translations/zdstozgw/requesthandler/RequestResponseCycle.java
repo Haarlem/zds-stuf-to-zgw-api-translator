@@ -40,8 +40,9 @@ import nl.haarlem.translations.zdstozgw.utils.StringUtils;
 )
 public class RequestResponseCycle {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "request_response_cycle_SEQ")
+    @SequenceGenerator(name = "request_response_cycle_SEQ", sequenceName = "request_response_cycle_SEQ", allocationSize = 1)
+    private long id;
 
 	private LocalDateTime startdatetime;
 	private LocalDateTime stopdatetime;

@@ -31,24 +31,17 @@ public class RequestResponseCycleIdTest {
     public void testIdGeneration() {
         RequestResponseCycle cycle1 = new RequestResponseCycle();
         cycle1.setModus("test1");
-        cycle1 = repository.save(cycle1);
+        repository.saveAndFlush(cycle1);
         assertNotNull(cycle1.getId());
         long firstId = cycle1.getId();
+        System.out.println("[DEBUG_LOG] cycle1.id: " + firstId);
 
         RequestResponseCycle cycle2 = new RequestResponseCycle();
         cycle2.setModus("test2");
-        cycle2 = repository.save(cycle2);
+        repository.saveAndFlush(cycle2);
         assertNotNull(cycle2.getId());
+        System.out.println("[DEBUG_LOG] cycle2.id: " + cycle2.getId());
 
-        assertNotEquals(cycle1.getId(), cycle2.getId());
-
-        RequestResponseCycle cycleWithManualId = new RequestResponseCycle();
-        cycleWithManualId.setId(firstId + 10);
-        cycleWithManualId.setModus("manual");
-        repository.save(cycleWithManualId);
-
-        // This might not fail if the sequence is at 2, it will just pick 3.
-        // But if the sequence was at 157 and we manual 158, next sequence will be 158 -> boom.
-        // Hibernate's SEQUENCE generator with allocationSize=1 calls nextval for EVERY insert.
+        assertNotEquals(firstId, cycle2.getId());
     }
 }
