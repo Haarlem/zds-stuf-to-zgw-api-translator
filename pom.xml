@@ -89,6 +89,12 @@
       <groupId>org.ibissource</groupId>
       <artifactId>ibis-ladybug</artifactId>
       <version>2.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.module</groupId>
+          <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
@@ -107,6 +113,11 @@
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
     </dependency>
 
     <dependency>

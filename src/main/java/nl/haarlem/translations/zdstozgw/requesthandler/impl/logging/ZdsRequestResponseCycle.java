@@ -1,9 +1,9 @@
 /*
  * Copyright 2020-2021 The Open Zaakbrug Contributors
  *
- * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the 
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
  * European Commission - subsequent versions of the EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  *
@@ -21,8 +21,10 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,8 @@ import nl.haarlem.translations.zdstozgw.utils.StringUtils;
 @Table(indexes = @Index(columnList = "referentienummer"))
 public class ZdsRequestResponseCycle {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "zds_request_response_cycle_gen")
+	@SequenceGenerator(name = "zds_request_response_cycle_gen", sequenceName = "zds_request_response_cycle_SEQ", allocationSize = 1)
 	private long id;
 	private String referentienummer;
 
