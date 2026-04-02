@@ -28,6 +28,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(org.springframework.security.config.Customizer.withDefaults());
