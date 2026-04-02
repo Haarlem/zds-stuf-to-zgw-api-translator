@@ -18,7 +18,7 @@ package nl.haarlem.translations.zdstozgw.requesthandler;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
 
-import javax.xml.soap.SOAPConstants;
+import jakarta.xml.soap.SOAPConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,3 +112,4 @@ public abstract class RequestHandler {
 
 	public abstract void save(RequestResponseCycle session);
 }
+

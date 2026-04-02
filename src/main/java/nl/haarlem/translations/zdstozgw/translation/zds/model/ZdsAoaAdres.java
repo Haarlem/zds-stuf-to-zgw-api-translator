@@ -2,7 +2,7 @@ package nl.haarlem.translations.zdstozgw.translation.zds.model;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 
 import static nl.haarlem.translations.zdstozgw.translation.zds.model.namespace.Namespace.BG;
 
@@ -34,3 +34,4 @@ public class ZdsAoaAdres extends ZdsObject {
 	public String huisnummertoevoeging;
 
 }
+

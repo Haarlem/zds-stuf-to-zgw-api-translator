@@ -17,9 +17,9 @@ package nl.haarlem.translations.zdstozgw.translation.zds.model;
 
 import static nl.haarlem.translations.zdstozgw.translation.zds.model.namespace.Namespace.STUF;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import lombok.Data;
 import nl.haarlem.translations.zdstozgw.utils.StufUtils;
@@ -39,3 +39,4 @@ public class ZdsBv03 extends ZdsStufDocument {
 		this.stuurgegevens.crossRefnummer = zdsStuurgegevens.referentienummer;
 	}
 }
+

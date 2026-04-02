@@ -17,7 +17,7 @@ package nl.haarlem.translations.zdstozgw.translation.zds.model;
 
 import static nl.haarlem.translations.zdstozgw.translation.zds.model.namespace.Namespace.ZKN;
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import nl.haarlem.translations.zdstozgw.utils.StufUtils;
 
@@ -33,3 +33,4 @@ abstract public class ZdsZknDocument extends ZdsObject {
 		this.stuurgegevens.tijdstipBericht = StufUtils.getStufDateTime();
 	}
 }
+

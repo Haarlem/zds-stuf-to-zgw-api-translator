@@ -18,10 +18,10 @@ package nl.haarlem.translations.zdstozgw.translation.zds.model;
 import static nl.haarlem.translations.zdstozgw.translation.zds.model.namespace.Namespace.BG;
 import static nl.haarlem.translations.zdstozgw.translation.zds.model.namespace.Namespace.STUF;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
 
 import lombok.Data;
 
@@ -66,3 +66,4 @@ public class ZdsVestiging extends ZdsObject {
 		public String huisnummertoevoeging;
 	}
 }
+

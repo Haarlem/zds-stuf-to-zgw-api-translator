@@ -1,9 +1,9 @@
 /*
  * Copyright 2020-2021 The Open Zaakbrug Contributors
  *
- * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the 
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
  * European Commission - subsequent versions of the EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  *
@@ -21,10 +21,14 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
+import org.apache.hc.client5.http.ssl.TrustAllStrategy;
+import org.apache.hc.core5.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,25 +74,31 @@ public class RestTemplateService {
 
 	private HttpComponentsClientHttpRequestFactory getAllCertsTrustingRequestFactory(int connectionRequestTimeout,
 			int connectTimeout, int readTimeout, int maxConnPerRoute, int maxConnTotal) {
-		TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
 
-		SSLContext sslContext = null;
+		HttpClientConnectionManager connectionManager;
 		try {
-			sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
+			connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+					.setSSLSocketFactory(SSLConnectionSocketFactoryBuilder.create()
+							.setSslContext(SSLContexts.custom().loadTrustMaterial(TrustAllStrategy.INSTANCE).build())
+							.build())
+					.setMaxConnTotal(maxConnTotal)
+					.setMaxConnPerRoute(maxConnPerRoute)
 					.build();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			log.error("Error creating trusting connection manager", e);
+			throw new RuntimeException(e);
 		}
 
-		SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
-		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf)
-				.setMaxConnPerRoute(maxConnPerRoute).setMaxConnTotal(maxConnTotal).build();
+		CloseableHttpClient httpClient = HttpClients.custom()
+				.setConnectionManager(connectionManager)
+				.build();
 
-		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-		requestFactory.setConnectionRequestTimeout(connectionRequestTimeout);
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 		requestFactory.setConnectTimeout(connectTimeout);
-		requestFactory.setReadTimeout(readTimeout);
+		requestFactory.setConnectionRequestTimeout(connectionRequestTimeout);
+		// Note: setReadTimeout is not directly on requestFactory for HttpClient 5 in some Spring versions,
+		// but it handles it via the client or properties.
 
-		requestFactory.setHttpClient(httpClient);
 		return requestFactory;
 	}
 

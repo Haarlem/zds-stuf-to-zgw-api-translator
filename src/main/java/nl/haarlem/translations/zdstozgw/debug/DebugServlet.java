@@ -1,9 +1,9 @@
 /*
  * Copyright 2020-2021 The Open Zaakbrug Contributors
  *
- * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the 
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
  * European Commission - subsequent versions of the EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  *
@@ -15,20 +15,22 @@
  */
 package nl.haarlem.translations.zdstozgw.debug;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import nextapp.echo2.app.ApplicationInstance;
-import nextapp.echo2.webcontainer.WebContainerServlet;
 import nl.nn.testtool.echo2.Echo2Application;
 
 /**
  * @author Jaco de Groot
  */
-public class DebugServlet extends WebContainerServlet {
+public class DebugServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private WebApplicationContext webApplicationContext;
 
@@ -38,9 +40,14 @@ public class DebugServlet extends WebContainerServlet {
 		webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletConfig.getServletContext());
 	}
 
-	@Override
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, "DebugServlet is currently disabled due to Spring Boot 3 migration (Echo2 incompatibility)");
+    }
+
 	public ApplicationInstance newApplicationInstance() {
 		return (Echo2Application)webApplicationContext.getBean("echo2Application");
 	}
 
 }
+
