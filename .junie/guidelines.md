@@ -7,9 +7,6 @@
 ###  Before Starting Work
 
 - **Always check for a clean working directory before starting.** Use stashing if needed. Name the stash `{timestamp}-{short-description}`.
-- **Create a new git branch** before starting new work.
-- **Use a clear naming convention** for branches:
-  `feature/{short-description}`, `bugfix/{short-description}`, `refactor/{short-description}`, etc.
 - **Write down the timestamp** of the session start.
   Format: `yyyy-MM-dd_hh-mm`
 
