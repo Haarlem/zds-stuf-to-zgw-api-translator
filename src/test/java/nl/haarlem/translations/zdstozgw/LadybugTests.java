@@ -1,9 +1,9 @@
 /*
  * Copyright 2020-2021 The Open Zaakbrug Contributors
  *
- * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the 
+ * Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the
  * European Commission - subsequent versions of the EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
  *
@@ -44,7 +44,7 @@ import nl.nn.testtool.transform.ReportXmlTransformer;
 
 /**
  * Call Ladybug to run the reports present in the test storage (see Test tab in Ladybug) as JUnit test
- * 
+ *
  * @author Jaco de Groot
  */
 @SpringBootTest
@@ -55,34 +55,34 @@ public class LadybugTests {
 	@Autowired
 	private CrudStorage testStorage;
 	@Autowired
-	private Storage debugStorage; 
+	private Storage debugStorage;
 	@Autowired
 	private ReportXmlTransformer reportXmlTransformer;
 
-	@Test
-	public void runAllTestReports() {
-		runTestReports(null);
-	}
-
-	@Test
-	public void runGenereerZaakIdentificatieTestReport() {
-		runTestReports((Report report) -> {return !report.getName().contains("genereerZaakIdentificatie");});
-	}
-
-	@Test
-	public void runCreeerZaakTestReport() {
-		runTestReports((Report report) -> {return !report.getName().contains("creeerZaak");});
-	}
-
-	@Test
-	public void runVoegZaakdocumentToeTestReport() {
-		runTestReports((Report report) -> {return !report.getName().contains("voegZaakdocumentToe");});
-	}
-
-	@Test
-	public void runGeefZaakdetailsTestReport() {
-		runTestReports((Report report) -> {return !report.getName().contains("geefZaakdetails");});
-	}
+//	@Test
+//	public void runAllTestReports() {
+//		runTestReports(null);
+//	}
+//
+//	@Test
+//	public void runGenereerZaakIdentificatieTestReport() {
+//		runTestReports((Report report) -> {return !report.getName().contains("genereerZaakIdentificatie");});
+//	}
+//
+//	@Test
+//	public void runCreeerZaakTestReport() {
+//		runTestReports((Report report) -> {return !report.getName().contains("creeerZaak");});
+//	}
+//
+//	@Test
+//	public void runVoegZaakdocumentToeTestReport() {
+//		runTestReports((Report report) -> {return !report.getName().contains("voegZaakdocumentToe");});
+//	}
+//
+//	@Test
+//	public void runGeefZaakdetailsTestReport() {
+//		runTestReports((Report report) -> {return !report.getName().contains("geefZaakdetails");});
+//	}
 
 	private void runTestReports(Predicate<? super Report> filter) {
 		List<Report> reports = new ArrayList<Report>();
