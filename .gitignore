@@ -39,3 +39,5 @@ build/
 test_output.txt
 
 .junie/junie-files-*
+
+.output.txt
