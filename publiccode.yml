@@ -1,8 +1,8 @@
 # This repository adheres to the publiccode.yml standard by including this 
 # metadata file that makes public software easily discoverable.
-# More info at https://github.com/italia/publiccode.yml
+# More info at https://github.com/publiccodeyml/publiccode.yml
 
-publiccodeYmlVersion: '0.2'
+publiccodeYmlVersion: '0'
 applicationSuite: Open Zaakbrug
 categories:
   - translation
@@ -11,33 +11,19 @@ description:
     documentation: 'https://github.com/Sudwest-Fryslan/OpenZaakBrug/tree/master/docs'
     features:
       - ZDS 1.1 genereerZaakIdentificatie_Di02
-      - |-
-        ZDS 1.1 creeerZaak_Lk01	
-      - |-
-        ZDS 1.1 geefZaakdetails_Lv01	
-      - |-
-        ZDS 1.1 updateZaak_Lk01	
-      - |-
-        ZDS 1.1 actualiseerZaakstatus_Lk01	
-      - |-
-        ZDS 1.1 geefLijstZaakdocumenten_Lv01	
-      - |-
-        ZDS 1.1 genereerDocumentIdentificatie_Di02	
-      - |-
-        ZDS 1.1 maakZaakdocument_Lk01	
-      - |-
-        ZDS 1.1 voegZaakdocumentToe_Lk01	
-      - |-
-        ZDS 1.1 geefZaakdocumentLezen_Lv01	
-      - |-
-        ZDS 1.1 geefZaakdocumentbewerken_Di02	
-      - |-
-        ZDS 1.1 updateZaakdocument_Di02	
-      - |-
-        ZDS 1.1 cancelCheckout_Di02	
-      - |-
-        StufZkn 3.1 zakLv01	
-    genericName: Open Zaakbrug
+      - ZDS 1.1 creeerZaak_Lk01
+      - ZDS 1.1 geefZaakdetails_Lv01
+      - ZDS 1.1 updateZaak_Lk01
+      - ZDS 1.1 actualiseerZaakstatus_Lk01
+      - ZDS 1.1 geefLijstZaakdocumenten_Lv01
+      - ZDS 1.1 genereerDocumentIdentificatie_Di02
+      - ZDS 1.1 maakZaakdocument_Lk01
+      - ZDS 1.1 voegZaakdocumentToe_Lk01
+      - ZDS 1.1 geefZaakdocumentLezen_Lv01
+      - ZDS 1.1 geefZaakdocumentbewerken_Di02
+      - ZDS 1.1 updateZaakdocument_Di02
+      - ZDS 1.1 cancelCheckout_Di02
+      - StufZkn 3.1 zakLv01
     localisedName: Open Zaakbrug
     longDescription: |
       De nieuwe standaard voor het zaakgewijs werken is de [zgw
@@ -120,21 +106,9 @@ description:
 developmentStatus: stable
 isBasedOn:
   - 'https://github.com/Haarlem/zds-stuf-to-zgw-api-translator'
-nl:
-  conforme:
-    gdpr: false
-    lineeGuidaDesign: false
-    misureMinimeSicurezza: false
-    modelloInteroperabilita: false
-  countryExtensionVersion: '0.2'
-  piattaforme:
-    anpr: false
-    cie: false
-    pagopa: false
-    spid: false
 landingURL: 'https://sudwest-fryslan.github.io/OpenZaakBrug/'
 legal:
-  license: EUPL
+  license: EUPL-1.2
 localisation:
   availableLanguages:
     - nl
@@ -155,4 +129,4 @@ releaseDate: '2021-07-01'
 roadmap: 'https://sudwest-fryslan.github.io/OpenZaakBrug/'
 softwareType: addon
 softwareVersion: 1.2.11
-url: 'https://github.com/Sudwest-Fryslan/OpenZaakBrug.git'
+url: 'https://github.com/Haarlem/zds-stuf-to-zgw-api-translator'
