@@ -822,8 +822,6 @@ public class ZaakService {
             }
         }
 
-        zgwEnkelvoudigInformatieObject.indicatieGebruiksrecht = "false";
-
         if(zgwEnkelvoudigInformatieObject.status != null) {
 			/*
 			in_bewerking - (In bewerking) Aan het informatieobject wordt nog gewerkt.
@@ -1275,7 +1273,6 @@ public class ZaakService {
                     debugWarning("could not convert: '" + zgwWordtEnkelvoudigInformatieObject.taal.toLowerCase()  + "', this will possible result in an error");
             }
         }
-        zgwWordtEnkelvoudigInformatieObject.indicatieGebruiksrecht = "false";
         if(zgwWordtEnkelvoudigInformatieObject.status != null) {
 			/*
 			in_bewerking - (In bewerking) Aan het informatieobject wordt nog gewerkt.
