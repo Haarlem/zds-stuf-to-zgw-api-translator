@@ -1,4 +1,4 @@
-FROM alpine/java:17-jdk
+FROM alpine/java:17-jre
 ENV TZ=Europe/Amsterdam
 WORKDIR /home
 RUN mkdir lib && mkdir data
