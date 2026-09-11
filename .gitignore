@@ -35,3 +35,7 @@ build/
 /src/main/resources/*.properties
 /src/main/resources/*.json
 *.DS_Store
+
+test_output.txt
+
+.junie/junie-files-*

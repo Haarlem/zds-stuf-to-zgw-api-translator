@@ -4,10 +4,10 @@
 
 Voor de minimale inrichting zijn er de volgende randvoorwaarden aan het systeem:
 
-- Java 11, getest met OpenJDK11
+- Java 17, getest met OpenJDK 17
 - Maven
 - Git
-- Internet verbinding voor git en maven 
+- Internet verbinding voor git en maven
 
 Ophalen en klaarzetten van de applicatie:
 
@@ -105,7 +105,7 @@ Om het berichten verkeer te bekijken zijn er 2 mogelijkheden:
 - Via de ladybug omgeving, hiermee een bepaalde sequence van berichten kan worden opgenomen en later worden afgespeeld. Deze is bereikbaar via de url: http://localhost:8080/debug/ .  Meer informatie over ladybug valt te vinden op: https://frank-manual.readthedocs.io/en/latest/testing/ladybug/capture/capture.html
 
 # Installatie met Spring Tool Suite
-Onderstaand stappenplan kan gebruikt worden voor een schone installatie met Spring Tool Suite op Windows. De Spring Tool Suite bevat de juiste versie van Java en heeft ingebouwde support voor Git en Maven. 
+Onderstaand stappenplan kan gebruikt worden voor een schone installatie met Spring Tool Suite op Windows. De Spring Tool Suite bevat de juiste versie van Java en heeft ingebouwde support voor Git en Maven.
 
 1. Download de Spring Tool Suite (Spring Tools 4 for Eclipse) van https://spring.io/tools
 2. Installeer de Spring Tool Suite door te dubbelklikken op de download
@@ -152,12 +152,12 @@ nl.haarlem.translations.zdstozgw.enableJWTEntpoint = true
 
 ### Java
 
-Java 11 or higher is needed to run the project. The project is tested with OpenJDK 11
+Java 17 or higher is needed to run the project. The project is tested with OpenJDK 17
 
-### Lombok 
+### Lombok
 
 This project uses [Lombok](https://projectlombok.org/). No setup is required to run the application after building with Maven.
-If compilation in an IDE is needed, setup may me applicable. 
+If compilation in an IDE is needed, setup may me applicable.
 Lombok plugins are available for all major Java IDE's ([examples](https://www.baeldung.com/lombok-ide))
 
 ### Installation ###
@@ -166,7 +166,7 @@ Clone the repo and build and run the service with Maven
 
 ```
 $ git clone https://github.com/Haarlem/zds-stuf-to-zgw-api-translator/
-$ cd zds-stuf-to-zgw-api-translator 
+$ cd zds-stuf-to-zgw-api-translator
 ```
 
 Use configuration from examples or provide local settings
