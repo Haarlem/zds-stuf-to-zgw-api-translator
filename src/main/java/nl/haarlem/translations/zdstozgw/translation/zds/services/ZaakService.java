@@ -795,6 +795,7 @@ public class ZaakService {
         ZgwEnkelvoudigInformatieObject zgwEnkelvoudigInformatieObject = this.modelMapper.map(zdsInformatieObject, ZgwEnkelvoudigInformatieObject.class);
         zgwEnkelvoudigInformatieObject.informatieobjecttype = zgwInformatieObjectType.url;
         zgwEnkelvoudigInformatieObject.bronorganisatie = rsin;
+        zgwEnkelvoudigInformatieObject.bestandsomvang =  getFileSize(zgwEnkelvoudigInformatieObject.inhoud);
         // https://github.com/Sudwest-Fryslan/OpenZaakBrug/issues/54
         // 		Move code to the ModelMapperConfig.java
         if(zgwEnkelvoudigInformatieObject.verzenddatum != null && zgwEnkelvoudigInformatieObject.verzenddatum.length() == 0) {
