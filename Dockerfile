@@ -1,4 +1,4 @@
-FROM docker.haarlem.nl/maven_jdk_java17node22:latest
+FROM alpine/java:17-jdk
 ENV TZ=Europe/Amsterdam
 WORKDIR /home
 RUN mkdir lib && mkdir data
