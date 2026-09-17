@@ -437,6 +437,8 @@ public class ZGWClient {
 	}
 
 	public ZgwEnkelvoudigInformatieObject getZaakDocumentByUrl(String url) {
+
+        url = replaceInternalUrlWithBaseUrl(url);
 		var zaakInformatieObjectJson = get(url, null);
 		Gson gson = new Gson();
 		var result = gson.fromJson(zaakInformatieObjectJson, ZgwEnkelvoudigInformatieObject.class);
