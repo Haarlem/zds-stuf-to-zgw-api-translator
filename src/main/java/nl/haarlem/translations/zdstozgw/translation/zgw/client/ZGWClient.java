@@ -438,7 +438,7 @@ public class ZGWClient {
 
 	public ZgwEnkelvoudigInformatieObject getZaakDocumentByUrl(String url) {
 
-        url = replaceInternalUrlWithBaseUrl(url);
+        url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getEnkelvoudiginformatieobject());
 		var zaakInformatieObjectJson = get(url, null);
 		Gson gson = new Gson();
 		var result = gson.fromJson(zaakInformatieObjectJson, ZgwEnkelvoudigInformatieObject.class);
@@ -855,14 +855,16 @@ public class ZGWClient {
 	}
 
 	public ZgwInformatieObjectType getZgwInformatieObjectTypeByUrl(String url) {
-		var documentType = get(url, null);
+		url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getInformatieobjecttype());
+
+        var documentType = get(url, null);
 		Gson gson = new Gson();
 		ZgwInformatieObjectType result = gson.fromJson(documentType, ZgwInformatieObjectType.class);
 		return result;
 	}
 
 	public ZgwLock getZgwInformatieObjectLock(ZgwEnkelvoudigInformatieObject zgwEnkelvoudigInformatieObject) {
-        zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url);
+        zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url, this.zgwProperties.getEndpoint().getEnkelvoudiginformatieobject());
 
         log.debug("Lock file: {}",zgwEnkelvoudigInformatieObject.url + "/lock");
 
@@ -873,7 +875,7 @@ public class ZGWClient {
 	}
 
 	public void getZgwInformatieObjectUnLock(ZgwEnkelvoudigInformatieObject zgwEnkelvoudigInformatieObject, ZgwLock zgwLock) {
-            zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url);
+            zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url, this.zgwProperties.getEndpoint().getEnkelvoudiginformatieobject());
 
             Gson gson = new Gson();
 			String json = gson.toJson(zgwLock);
@@ -882,7 +884,7 @@ public class ZGWClient {
 	}
 
 	public ZgwEnkelvoudigInformatieObject patchZaakDocument(ZgwEnkelvoudigInformatieObject zgwEnkelvoudigInformatieObject) {
-        zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url);
+        zgwEnkelvoudigInformatieObject.url =replaceInternalUrlWithBaseUrl(zgwEnkelvoudigInformatieObject.url, this.zgwProperties.getEndpoint().getEnkelvoudiginformatieobject());
 
 		Gson gson = new Gson();
 		String json = gson.toJson(zgwEnkelvoudigInformatieObject);
@@ -955,10 +957,10 @@ public class ZGWClient {
 		return this.getObjectInformatieObjectByObject(parameters);
 	}
 
-    private String replaceInternalUrlWithBaseUrl(String url) {
+    private String replaceInternalUrlWithBaseUrl(String url, String endpoint) {
         var index = url.lastIndexOf("/");
         if(zgwProperties.isReplaceInternalUrlsWithBaseurl()){
-            url = this.baseUrl + this.zgwProperties.getEndpoint().getEnkelvoudiginformatieobject() + url.substring(index);
+            url = this.baseUrl + endpoint + url.substring(index);
         }
         return url;
     }
