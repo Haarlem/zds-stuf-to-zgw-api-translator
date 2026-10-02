@@ -972,10 +972,12 @@ public class ZGWClient {
 	}
 
     private String replaceInternalUrlWithBaseUrl(String url, String endpoint) {
+        log.debug("replaceInternalUrlWithBaseUrl: " + url + " with baseurl: " + this.baseUrl + " and endpoint: " + endpoint);
         var index = url.lastIndexOf("/");
         if(zgwProperties.isReplaceInternalUrlsWithBaseurl()){
             url = this.baseUrl + endpoint + url.substring(index);
         }
+        log.debug("replaceInternalUrlWithBaseUrl result: " + url);
         return url;
     }
 
