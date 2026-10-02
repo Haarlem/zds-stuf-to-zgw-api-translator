@@ -1094,7 +1094,8 @@ public class ZaakService {
 
         var zdsStatussen = new ArrayList<ZdsHeeft>();
         for (ZgwStatus zgwStatus : this.zgwClient.getStatussenByZaakUrl(zgwZaak.url)) {
-            ZgwStatusType zgwStatusType = this.zgwClient.getResource(zgwStatus.statustype, ZgwStatusType.class);
+            ZgwStatusType zgwStatusType = this.zgwClient.getStatusTypeByUrl(zgwStatus.statustype);
+
             // ZdsHeeft zdsHeeft = modelMapper.map(zgwStatus, ZdsHeeft.class);
             ZdsHeeft zdsHeeft = new ZdsHeeft();
             zdsHeeft.setEntiteittype("ZAKSTT");

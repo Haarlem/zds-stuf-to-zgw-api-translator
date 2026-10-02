@@ -318,7 +318,9 @@ public class ZGWClient {
 	}
 
 	public ZgwRolType getRolTypeByUrl(String url) {
-		var rolTypeJson = get(url, null);
+		url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getRoltype());
+
+        var rolTypeJson = get(url, null);
 		Gson gson = new Gson();
 		ZgwRolType result = gson.fromJson(rolTypeJson, ZgwRolType.class);
 		if(result == null) {
@@ -328,7 +330,7 @@ public class ZGWClient {
 	}
 
 	public ZgwZaak getZaakByUrl(String url) {
-		var zaakJson = get(url, null);
+		var zaakJson = get(replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getZaak()), null);
 		Gson gson = new Gson();
 		ZgwZaak result = gson.fromJson(zaakJson, ZgwZaak.class);
 		if(result == null) {
@@ -503,6 +505,15 @@ public class ZGWClient {
 		return gson.fromJson(response, resourceType);
 	}
 
+    public ZgwStatusType getStatusTypeByUrl(String url) {
+        url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getStatustype());
+
+        Gson gson = new Gson();
+        String response = get(url, null);
+        return gson.fromJson(response, ZgwStatusType.class);
+    }
+
+
 	public ZgwStatus addZaakStatus(ZgwStatus zgwSatus) {
 		Gson gson = new Gson();
 		String json = gson.toJson(zgwSatus);
@@ -564,7 +575,10 @@ public class ZGWClient {
 	}
 
 	public ZgwZaakType getZaakTypeByUrl(String url) {
-		var zaakTypeJson = get(url, null);
+
+        url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getZaaktype());
+
+        var zaakTypeJson = get(url, null);
 		Gson gson = new Gson();
 		ZgwZaakType result = gson.fromJson(zaakTypeJson, ZgwZaakType.class);
 		return result;
@@ -633,16 +647,19 @@ public class ZGWClient {
         if (zgwZaakObject.getUrl() == null) {
             throw new ConverterException("zaakobject url may not be null");
         }
-        delete(zgwZaakObject.getUrl());
+        delete(replaceInternalUrlWithBaseUrl(zgwZaakObject.getUrl(), zgwProperties.getEndpoint().getZaakobject()));
     }
 
     public void updateZaakObject(ZgwZaakObject zgwZaakObject) {
         if (zgwZaakObject.getUrl() == null) {
             throw new ConverterException("zaakobject url may not be null");
         }
+
+        var url = replaceInternalUrlWithBaseUrl(zgwZaakObject.getUrl(), this.zgwProperties.getEndpoint().getZaakobject());
+
         Gson gson = new Gson();
         String json = gson.toJson(zgwZaakObject);
-        patch(zgwZaakObject.getUrl(), json);
+        patch(url, json);
     }
 
 	public void deleteZaakResultaat(String uuid) {
@@ -716,6 +733,8 @@ public class ZGWClient {
 		return null;
 	}
 
+
+
 	public ZgwStatusType getStatusTypeByZaakTypeAndOmschrijving(ZgwZaakType zaakType, String statusOmschrijving, String verwachteVolgnummer) {
 		Map<String, String> parameters = new HashMap();
 		parameters.put("zaaktype", zaakType.url);
@@ -762,7 +781,7 @@ public class ZGWClient {
 	}
 
 	private ZgwResultaatType getResultaatTypeByUrl(String url) {
-		var resultaatTypeJson = get(url, null);
+		var resultaatTypeJson = get(replaceInternalUrlWithBaseUrl(url, zgwProperties.getEndpoint().getResultaattype()), null);
 		Gson gson = new Gson();
 		ZgwResultaatType result = gson.fromJson(resultaatTypeJson, ZgwResultaatType.class);
 		if(result == null) {
