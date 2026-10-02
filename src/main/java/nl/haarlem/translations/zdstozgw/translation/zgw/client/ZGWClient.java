@@ -499,12 +499,6 @@ public class ZGWClient {
 		return queryResult.getResults();
 	}
 
-	public <T> T getResource(String url, Class<T> resourceType) {
-		Gson gson = new Gson();
-		String response = get(url, null);
-		return gson.fromJson(response, resourceType);
-	}
-
     public ZgwStatusType getStatusTypeByUrl(String url) {
         url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getStatustype());
 
@@ -512,7 +506,6 @@ public class ZGWClient {
         String response = get(url, null);
         return gson.fromJson(response, ZgwStatusType.class);
     }
-
 
 	public ZgwStatus addZaakStatus(ZgwStatus zgwSatus) {
 		Gson gson = new Gson();
@@ -875,6 +868,8 @@ public class ZGWClient {
 
 	public ZgwInformatieObjectType getZgwInformatieObjectTypeByUrl(String url) {
 		url = replaceInternalUrlWithBaseUrl(url, this.zgwProperties.getEndpoint().getInformatieobjecttype());
+
+        log.debug("getZgwInformatieObjectTypeByUrl: " + url);
 
         var documentType = get(url, null);
 		Gson gson = new Gson();
